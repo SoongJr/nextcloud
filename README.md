@@ -33,17 +33,21 @@ Install
 -------
 
 ```bash
-# prepare your os and install ansible
-curl -s https://raw.githubusercontent.com/ReinerNippes/nextcloud/master/prepare_system.sh | /bin/bash
-
 # clone this repo
 git clone https://github.com/ReinerNippes/nextcloud
 
 # change to nextcloud directory
 cd nextcloud
 
+# prepare your os and install ansible
+./prepare_system.sh
+
 # edit variables
 vim inventory
+
+# optional: create secrets.yml containing passwords
+printf "---\nnc_passwd: ''\nnc_db_passwd: ''\n" > secrets.yml
+vim secrets.yml
 
 # run the playbook
 ./nextcloud.yml

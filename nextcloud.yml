@@ -1,8 +1,12 @@
-#!/usr/bin/env ansible-playbook
+#!/usr/bin/env -S ansible-playbook -kK
 
 - name: 'install nextcloud'
   hosts: nextcloud
   become: true
+
+  pre_tasks:
+    - name: Load secrets
+      ansible.builtin.include_vars: secrets.yml
 
   roles:
     - { role: prep_ufw,         when: install_ufw == 'true' and (ansible_os_family == "Debian" or ansible_os_family == "Ubuntu") }

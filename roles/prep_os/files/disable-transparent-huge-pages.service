@@ -6,8 +6,8 @@ Before=basic.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c '/bin/echo never > /sys/kernel/mm/transparent_hugepage/enabled'
-ExecStart=/bin/sh -c '/bin/echo never > /sys/kernel/mm/transparent_hugepage/defrag'
+ExecStart=/bin/sh -c '[ ! -e /sys/kernel/mm/transparent_hugepage ] || /bin/echo never > /sys/kernel/mm/transparent_hugepage/enabled'
+ExecStart=/bin/sh -c '[ ! -e /sys/kernel/mm/transparent_hugepage ] || /bin/echo never > /sys/kernel/mm/transparent_hugepage/defrag'
 
 [Install]
 WantedBy=basic.target

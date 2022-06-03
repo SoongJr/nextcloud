@@ -30,6 +30,6 @@
     type:           database
     obj:            "{{ nc_db }}"
     role:           "{{ nc_db_user }}"
-  become: yes
+  become: true
   become_user:      postgres
 

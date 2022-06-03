@@ -1,21 +1,22 @@
 [nextcloud]
-localhost ansible_connection=local
+# localhost ansible_connection=local
+nextcloud-pi ansible_user=pi
 
 [nextcloud:vars]
 
 # Server domain name
 # Default is the fqdn of the machine
-# fqdn       = nc.example.org
+fqdn       = soongjr.mooo.com
 
 # selfsigned certificate as default
-ssl_certificate_type  = 'selfsigned'
+# ssl_certificate_type  = 'selfsigned'
 
 # Letsencrypt or selfsigned certificate
-# ssl_certificate_type  = 'letsencrypt'
+ssl_certificate_type  = 'letsencrypt'
 
 
 # Your email adresse for letsencrypt
-# cert_email = nc@example.org
+cert_email = SoongJr@googlemail.com
 
 # receive a certificate from staging
 # uncomment if you want to use letsencrypt staging environment
@@ -29,19 +30,19 @@ nc_web_port          = 80
 nc_ssl_port          = 443
 
 # data dir
-nc_datadir           = /var/nc-data
+nc_datadir           = /mnt/ext/ncdata
 
 # admin user
-nc_admin             = 'admin'
-nc_passwd            = ''             # leave empty to generate random password
+nc_admin             = 'ncp'
+nc_passwd            = ''             # leave empty to generate random password or set in secrets.yml
 
 # database settings
-# nc_db_type          = 'mysql'        # (MariaDB)
-nc_db_type           = 'pgsql'        # (PostgreSQL)
+nc_db_type          = 'mysql'         # (MariaDB)
+# nc_db_type           = 'pgsql'      # (PostgreSQL)
 nc_db_host           = 'localhost'
 nc_db                = 'nextcloud'
 nc_db_user           = 'nextcloud'
-nc_db_passwd         = ''             # leave empty to generate random password
+nc_db_passwd         = ''             # leave empty to generate random password or set in secrets.yml
 
 # Nextcloud mail setup
 nc_configure_mail    = false

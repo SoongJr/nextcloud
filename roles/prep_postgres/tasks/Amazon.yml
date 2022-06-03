@@ -23,7 +23,7 @@
   command: /usr/bin/postgresql-setup --initdb
   args:
     creates: /var/lib/pgsql/data/PG_VERSION
-  become: yes
+  become: true
 
 - name: ensure postgres is running
   systemd:

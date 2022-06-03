@@ -12,15 +12,30 @@
     group: "{{ item.group }}"
     mode: "{{ item.mode }}"
   with_items:
-    - { path: '/usr/local/tmp/apc',      owner: '{{ web_user[ansible_distribution] }}', group: 'root', mode: '1777' }
-    - { path: '/usr/local/tmp/sessions', owner: '{{ web_user[ansible_distribution] }}', group: 'root', mode: '1777' }
-    - { path: '/usr/local/tmp/cache',    owner: '{{ web_user[ansible_distribution] }}', group: 'root', mode: '1777' }
+    - {
+        path: "/usr/local/tmp/apc",
+        owner: "{{ web_user[ansible_distribution] }}",
+        group: "root",
+        mode: "1777",
+      }
+    - {
+        path: "/usr/local/tmp/sessions",
+        owner: "{{ web_user[ansible_distribution] }}",
+        group: "root",
+        mode: "1777",
+      }
+    - {
+        path: "/usr/local/tmp/cache",
+        owner: "{{ web_user[ansible_distribution] }}",
+        group: "root",
+        mode: "1777",
+      }
 
 - name: get uid of web_user
   user:
     name: "{{ web_user[ansible_distribution] }}"
   register: web_user_id
-  
+
 - name: mount tmp fs
   mount:
     src: "tmpfs"
@@ -47,7 +62,7 @@
     - /usr/local/tmp/sessions
 
 - name: sysctl vm.overcommit_memory=1
-  sysctl: 
+  sysctl:
     name: vm.overcommit_memory
     value: "1"
     state: present
@@ -65,7 +80,7 @@
 - name: disable transparent hugepages - copy service file
   copy:
     src: disable-transparent-huge-pages.service
-    dest: '{{ service_path[ansible_distribution] }}/disable-transparent-huge-pages.service'
+    dest: "{{ service_path[ansible_distribution] }}/disable-transparent-huge-pages.service"
     owner: root
     group: root
     mode: 0644
@@ -75,19 +90,19 @@
     name: disable-transparent-huge-pages.service
     enabled: true
     state: started
-    
+
 - name: create symbolic link to /usr/bin/gs
   file:
-    src:  /usr/bin/gs
+    src: /usr/bin/gs
     dest: /usr/local/bin/gs
     state: link
-    
+
 - name: change ImageMagick settings
   lineinfile:
-    path:   '{{ imagemagick_xml_path[ansible_distribution] }}'
-    line:   '  <policy domain="coder" rights="read|write" pattern="{{ item }}" />'
+    path: "{{ imagemagick_xml_path[ansible_distribution] }}"
+    line: '  <policy domain="coder" rights="read|write" pattern="{{ item }}" />'
     regexp: '(.*)<policy domain="coder" rights="(.*)" pattern="{{ item }}" />(.*)'
-    insertbefore: '</policymap>'
+    insertbefore: "</policymap>"
   loop:
     - PS
     - EPI

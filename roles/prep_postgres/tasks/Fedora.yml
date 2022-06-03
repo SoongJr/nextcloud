@@ -27,7 +27,7 @@
   command: /usr/pgsql-{{ postgresql_version }}/bin/postgresql-{{ postgresql_version }}-setup initdb
   args:
     creates: /var/lib/pgsql/{{ postgresql_version }}/data/PG_VERSION
-  become: yes
+  become: true
 
 - name: ensure postgres is running
   systemd:
